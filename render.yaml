@@ -1,6 +1,0 @@
-services:
-  - type: web
-    name: chunxi-road-dashboard
-    runtime: docker
-    dockerfilePath: ./Dockerfile
-    healthCheckPath: /healthz
