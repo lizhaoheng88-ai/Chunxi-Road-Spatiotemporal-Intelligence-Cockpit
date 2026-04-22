@@ -1,0 +1,123 @@
+[
+  {
+    "title": "Supply-demand interpretation mainline",
+    "tags": [
+      "supply-demand",
+      "streetview",
+      "interpretation",
+      "decision-support"
+    ],
+    "content": "The current formal supply-demand explainer now uses 18 supply features. Supply-side explanatory strength is about 634.05x of the demand side, and the strongest drivers are 步行道长度, 路网交叉密度, 街景边缘密度.",
+    "recommendations": [
+      "Use the decision-support cards as the main evidence layer for the homepage AI consultant and the public-facing recommendation workflow.",
+      "Treat street-scene features as part of the formal mainline now: they account for about 29.8% of total supply importance in the latest fixed SHAP result."
+    ],
+    "sources": [
+      "public/data/decision-support.json",
+      "public/data/decision-graph.json"
+    ]
+  },
+  {
+    "title": "Phase 4 warehouse integration",
+    "tags": [
+      "phase4",
+      "warehouse",
+      "duckdb",
+      "dashboard"
+    ],
+    "content": "The dashboard now reads warehouse views and standardized experiment logs instead of scattered module outputs.",
+    "recommendations": [
+      "Treat warehouse.duckdb and the multimodal feature table as the only authoritative dashboard sources.",
+      "Keep adding new modal layers through cleaned.* views so the frontend never needs raw path knowledge again."
+    ],
+    "sources": [
+      "data_warehouse/warehouse.duckdb",
+      "data_warehouse/features/multimodal_feature_table.parquet"
+    ]
+  },
+  {
+    "title": "Signal backbone",
+    "tags": [
+      "signal",
+      "backbone",
+      "forecast",
+      "target"
+    ],
+    "content": "The model-ready signal slice spans 1507 hours and peaks at 2025-03-14T17:00:00 with 4,042 signals.",
+    "recommendations": [
+      "Use the signal layer as the first place to inspect target drift or regime shifts.",
+      "Keep time filtering explicit in experiment configs so dashboard and training stay aligned."
+    ],
+    "sources": [
+      "warehouse.duckdb :: cleaned.signal_grid_hourly"
+    ]
+  },
+  {
+    "title": "Video alignment status",
+    "tags": [
+      "video",
+      "alignment",
+      "sparse",
+      "warehouse"
+    ],
+    "content": "The aligned video table covers 9 hours and 7 grids, but overlap with the model-ready signal slice is still weak.",
+    "recommendations": [
+      "Use the video layer for movement evidence and qualitative checking, not yet as a decisive training advantage.",
+      "Prioritize future data collection that overlaps the signal window before making stronger multimodal claims."
+    ],
+    "sources": [
+      "warehouse.duckdb :: cleaned.video_grid_hourly"
+    ]
+  },
+  {
+    "title": "Social warehouse layer",
+    "tags": [
+      "social",
+      "broadcast",
+      "alignment",
+      "context"
+    ],
+    "content": "The social table provides 345 aligned days through a region-broadcast strategy, which is useful for context but still spatially coarse.",
+    "recommendations": [
+      "Keep the current broadcast layer for broad narrative context.",
+      "Upgrade to POI-level matching when better location precision is available."
+    ],
+    "sources": [
+      "warehouse.duckdb :: cleaned.social_grid_hourly"
+    ]
+  },
+  {
+    "title": "Forecast baseline",
+    "tags": [
+      "forecast",
+      "baseline",
+      "phase3",
+      "metrics"
+    ],
+    "content": "The accepted standardized run is Hybrid baseline with test MAE 5.99 and test WAPE 70.59%.",
+    "recommendations": [
+      "Use this run as the benchmark for all later seq_len, ablation, or architecture experiments.",
+      "When adding new variants, log them through the same experiment bundle so the dashboard can compare them automatically."
+    ],
+    "sources": [
+      "D:\\shujuhuizong\\analysis_outputs\\experiments\\20260408_225928_chunxi_multimodal_base_hybrid\\experiment_log.json"
+    ]
+  },
+  {
+    "title": "Road context",
+    "tags": [
+      "road",
+      "static",
+      "subway",
+      "context"
+    ],
+    "content": "Static road features are complete for all warehouse rows, and the mean subway distance across grids is 639.6 m.",
+    "recommendations": [
+      "Use road features as interpretable context whenever temporal modalities are sparse.",
+      "Surface these features alongside hotspot cells when explaining model behavior to stakeholders."
+    ],
+    "sources": [
+      "warehouse.duckdb :: cleaned.road_grid_features"
+    ]
+  }
+]
